@@ -1,0 +1,28 @@
+{
+  "name": "alphacontrast",
+  "version": "2.0.0",
+  "description": "Reads the visible content behind an element and recolors it to display the contrasting color, masked to the foreground shape.",
+  "main": "alphacontrast.js",
+  "scripts": {
+    "test": "node test/alphacontrast.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshdoehla/alphacontrast.git"
+  },
+  "keywords": [
+    "contrast",
+    "alpha",
+    "backdrop-filter",
+    "mask",
+    "css",
+    "invert",
+    "overlay"
+  ],
+  "author": "Josh Doehla",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/joshdoehla/alphacontrast/issues"
+  },
+  "homepage": "https://github.com/joshdoehla/alphacontrast#readme"
+}

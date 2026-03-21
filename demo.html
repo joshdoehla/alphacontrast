@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alpha Contrast v2 — Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      /* colourful gradient background so the contrast effect is visible */
+      background: linear-gradient(135deg, #f06 0%, #4a90d9 50%, #7ed957 100%);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    h1 { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,.3); }
+    p.info { color: #fff; max-width: 640px; text-align: center; line-height: 1.5; }
+
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(4px);
+      border-radius: 12px;
+      padding: 1.5rem;
+      width: 280px;
+      text-align: center;
+      color: #fff;
+    }
+    .card h2 { margin-bottom: .75rem; font-size: 1rem; }
+
+    /* ─── Alpha Contrast targets ──────────────────────────────── */
+
+    .ac-box {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+
+    .ac-box svg { display: block; width: 100%; height: 100%; }
+
+    /* Mode switcher buttons */
+    .controls { margin-top: 1rem; }
+    .controls button {
+      font-size: .75rem;
+      padding: .3rem .6rem;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+    }
+    .controls button:hover { background: rgba(255,255,255,.25); }
+    .controls button.active { background: rgba(255,255,255,.4); }
+  </style>
+</head>
+<body>
+
+  <h1>Alpha Contrast v2.0 — Demo</h1>
+  <p class="info">
+    Each shape below uses <code>&lt;div class="alphacontrast"&gt;</code>.
+    The contrasting colour is computed from the gradient background behind
+    it — entirely via GPU-accelerated CSS <code>backdrop-filter</code>.
+  </p>
+
+  <div class="demo-row">
+
+    <!-- 1. SVG circle — invert mode (default) -->
+    <div class="card">
+      <h2>Invert (default)</h2>
+      <div id="demo-invert" class="ac-box alphacontrast" data-ac-mode="invert">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="95" fill="black"/>
+        </svg>
+      </div>
+      <div class="controls">
+        <button onclick="switchMode('demo-invert','invert',this);" class="active">invert</button>
+        <button onclick="switchMode('demo-invert','complement',this);">complement</button>
+        <button onclick="switchMode('demo-invert','bw',this);">bw</button>
+        <button onclick="switchMode('demo-invert','luminance',this);">luminance</button>
+      </div>
+    </div>
+
+    <!-- 2. SVG star — complement mode -->
+    <div class="card">
+      <h2>Complement</h2>
+      <div id="demo-complement" class="ac-box alphacontrast" data-ac-mode="complement">
+        <svg viewBox="0 0 200 200">
+          <polygon points="100,10 127,80 200,80 140,125 160,195 100,155 40,195 60,125 0,80 73,80"
+                   fill="black"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 3. SVG rounded-rect — bw mode -->
+    <div class="card">
+      <h2>Black / White</h2>
+      <div id="demo-bw" class="ac-box alphacontrast" data-ac-mode="bw" data-ac-threshold="200">
+        <svg viewBox="0 0 200 200">
+          <rect x="10" y="10" width="180" height="180" rx="30" fill="black"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 4. SVG heart — luminance mode -->
+    <div class="card">
+      <h2>Luminance</h2>
+      <div id="demo-luminance" class="ac-box alphacontrast" data-ac-mode="luminance">
+        <svg viewBox="0 0 200 200">
+          <path d="M100 180 C40 130 0 90 0 55 0 25 25 0 55 0 75 0 90 12 100 30
+                   110 12 125 0 145 0 175 0 200 25 200 55 200 90 160 130 100 180Z"
+                fill="black"/>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="alphacontrast.js"></script>
+  <script>
+    function switchMode(id, mode, btn) {
+      var el = document.getElementById(id);
+      AlphaContrast.setMode(el, mode);
+      // highlight active button
+      var buttons = btn.parentNode.querySelectorAll('button');
+      for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
