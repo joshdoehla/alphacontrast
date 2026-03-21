@@ -4,7 +4,7 @@ Reads the visible content behind an element via the browser's own compositing en
 
 ## How It Works
 
-Uses CSS `backdrop-filter` for the colour transform (GPU-accelerated, reads the actual composited backdrop) and CSS `mask-image` to clip the effect to the foreground shape's alpha channel.
+Uses CSS `backdrop-filter` for the color transform (GPU-accelerated, reads the actual composited backdrop) and CSS `mask-image` to clip the effect to the foreground shape's alpha channel.
 
 ## Quick Start
 
@@ -35,7 +35,7 @@ Add the script to your page and give any element the class `alphacontrast`:
 |---|---|---|
 | `data-ac-src` | Explicit mask image URL (overrides child detection) | — |
 | `data-ac-mode` | `"invert"` \| `"complement"` \| `"bw"` \| `"luminance"` | `"invert"` |
-| `data-ac-fill` | Background colour on the overlay | `transparent` |
+| `data-ac-fill` | Background color on the overlay | `transparent` |
 | `data-ac-threshold` | `contrast()` strength for bw mode | `100` |
 | `data-ac-mask-size` | CSS `mask-size` value | `"100% 100%"` |
 
