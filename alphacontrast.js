@@ -79,7 +79,8 @@
 
   function resolveFilter(mode, opts) {
     var tpl = MODES[mode] || MODES.invert;
-    return tpl.replace('__THRESHOLD__', String(opts.threshold || 100));
+    var threshold = opts.threshold != null ? opts.threshold : 100;
+    return tpl.replace('__THRESHOLD__', String(threshold));
   }
 
   function findMaskSource(el) {
