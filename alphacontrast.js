@@ -102,7 +102,8 @@
 
   function svgToDataURL(svg) {
     var clone = svg.cloneNode(true);
-    clone.removeAttribute('style');
+    // Clear only inline visibility to avoid invisible masks, but preserve other inline styles
+    if (clone.style && clone.style.visibility) clone.style.visibility = '';
     if (!clone.getAttribute('xmlns'))
       clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     if (!clone.getAttribute('width'))  clone.setAttribute('width',  '100%');
