@@ -215,6 +215,7 @@
       // No mask → full-element effect
       state.overlay.style.webkitMaskImage = 'none';
       state.overlay.style.maskImage       = 'none';
+      showChildren(el);
       return;
     }
 
