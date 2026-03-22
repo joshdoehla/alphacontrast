@@ -154,16 +154,35 @@
     overlay.style.backgroundColor      = fill || 'transparent';
   }
 
+  // Track previous inline visibility values so we can restore them correctly.
+  var previousVisibility = typeof WeakMap !== 'undefined' ? new WeakMap() : new Map();
+
   function hideChildren(el) {
     for (var i = 0; i < el.children.length; i++) {
-      if (!el.children[i].classList.contains('ac-overlay'))
-        el.children[i].style.visibility = 'hidden';
+      var child = el.children[i];
+      if (!child.classList.contains('ac-overlay')) {
+        // Save current inline visibility (even if it's an empty string) so it can be restored.
+        if (!previousVisibility.has(child)) {
+          previousVisibility.set(child, child.style.visibility);
+        }
+        child.style.visibility = 'hidden';
+      }
     }
   }
+
   function showChildren(el) {
     for (var i = 0; i < el.children.length; i++) {
-      if (!el.children[i].classList.contains('ac-overlay'))
-        el.children[i].style.visibility = '';
+      var child = el.children[i];
+      if (!child.classList.contains('ac-overlay')) {
+        if (previousVisibility.has(child)) {
+          var prev = previousVisibility.get(child);
+          previousVisibility.delete(child);
+          child.style.visibility = prev;
+        } else {
+          // Fallback to clearing inline visibility when no stored value exists.
+          child.style.visibility = '';
+        }
+      }
     }
   }
 
