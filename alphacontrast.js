@@ -242,7 +242,13 @@
   /* ─── public API ───────────────────────────────────────────── */
 
   var AlphaContrast = {
-    init: function (el, opts) { setup(el, opts); return this; },
+    init: function (el, opts) {
+      if (typeof document === 'undefined') {
+        throw new Error('AlphaContrast.init() requires a DOM environment (document is undefined)');
+      }
+      setup(el, opts);
+      return this;
+    },
 
     scan: function () {
       if (typeof document === 'undefined') return this;
