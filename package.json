@@ -20,7 +20,7 @@
     "overlay"
   ],
   "author": "Josh Doehla",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/joshdoehla/alphacontrast/issues"
   },
