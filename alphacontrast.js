@@ -125,7 +125,12 @@
       c.width  = Math.round(w * dpr);
       c.height = Math.round(h * dpr);
       c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-      cb(c.toDataURL('image/png'));
+      try {
+        cb(c.toDataURL('image/png'));
+      } catch (e) {
+        // Canvas may be tainted by cross-origin image without CORS; fall back to raw src
+        cb(src);
+      }
     };
     img.onerror = function () { cb(src); };  // fallback: raw URL
     img.src = src;
